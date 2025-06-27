@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marathon Training App</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -51,9 +50,6 @@
 </head>
 <body class="p-4 sm:p-6 md:p-8">
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 sm:p-8 md:p-10 mb-8">
-        <!-- Removed H1 and welcome text -->
-
-        <!-- Overall Progress Section -->
         <div class="bg-purple-50 border border-purple-200 text-purple-800 p-4 rounded-lg mb-8 shadow-sm">
             <h2 class="text-2xl font-semibold mb-3">Overall Progress</h2>
             <div class="progress-bar-container">
@@ -62,16 +58,15 @@
             <p class="text-center mt-2 text-lg font-medium" id="progress-text">0 of 70 sessions (0%) done.</p>
         </div>
 
-        <!-- Week Navigation -->
         <div class="flex items-center justify-between mb-6">
-            <button id="prevWeekBtn" class="flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            <button id="prevWeekBtn" class="flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Previous Week">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
                 Previous
             </button>
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 text-center" id="current-week-display">Week 1 of 10</h2>
-            <button id="nextWeekBtn" class="flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            <button id="nextWeekBtn" class="flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Next Week">
                 Next
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -80,7 +75,6 @@
         </div>
 
         <div class="space-y-8" id="training-plan-container">
-            <!-- Data for dynamic generation -->
             <script>
                 const weeklyDurations = {
                     "tuesday": [30, 32, 34, 30, 34, 38, 42, 34, 42, 50],
@@ -103,7 +97,8 @@
                 ];
 
                 const dailyWorkouts = [
-                    { day: "Monday", type: "Core Training"
+                    {
+                        day: "Monday", type: "Core Training", goal: "Strengthen core", workout: `
                         <ul class="list-disc pl-5 mt-2 space-y-1">
                             <li><strong>Bird Dog:</strong> 8–12 reps per side. How to: Start on all fours, with your hands squarely beneath your shoulders and your knees directly beneath your glutes. Simultaneously extend your left arm forward and your right leg back (parallel with your core). Then, engaging your core, bring your left elbow in to meet your right knee. Do 10 to 15 reps on each side.</li>
                             <li><strong>Knees-to-Elbows in High Plank:</strong> How to: Start in a high plank. Lift your right leg, straightened, until it is parallel with your core. Then, keeping your core steady, bring your right knee to your right elbow. Do 10 to 15 reps on each side.</li>
@@ -115,7 +110,8 @@
                         </ul>
                     `},
                     { day: "Tuesday", type: "Progression Run", goal: "Introduce varying intensities and build aerobic capacity.", workout: "Total <span class='duration-placeholder'></span> run: 1/3 at Phase 2 HR, 1/3 at Phase 3 HR, 1/3 at Phase 4 HR." },
-                    { day: "Wednesday", type: "Strength - Leg Training"
+                    {
+                        day: "Wednesday", type: "Strength - Leg Training", goal: "Strengthen legs", workout: `
                         <ul class="list-disc pl-5 mt-2 space-y-1">
                             <li><strong>Weighted Squats:</strong> Works quads, hamstrings, glutes, and core. How to: Regular squat with kettlebell held to one side (imbalance increases core demand).</li>
                             <li><strong>Weighted Step Back Lunge:</strong> Works legs and glutes. How to: Hold weight by your side, step back into deep lunge. Important for glute strength to protect back and support running form.</li>
@@ -128,7 +124,7 @@
                     { day: "Sunday", type: "Long Run", goal: "Build endurance, mental toughness, and prepare for marathon distance.", workout: "Continuous <span class='duration-placeholder'></span> run in upper Phase 2 to lower Phase 3 HR." }
                 ];
 
-                const totalSessions = 10 * 7; // 10 weeks * 7 days/week
+                const totalSessions = 10 * dailyWorkouts.length; // 10 weeks * 7 days/week (derived from dailyWorkouts array length)
                 let completedSessions = 0;
                 let currentWeek = 0; // 0-indexed for array, will display as week + 1
 
@@ -168,16 +164,23 @@
                         }
                     });
                     currentWeek = weekIndex;
-                    document.getElementById('current-week-display').textContent = `Week ${currentWeek + 1} of 10`;
-                    
+                    document.getElementById('current-week-display').textContent = `Week ${currentWeek + 1} of ${weeklyDurations.tuesday.length}`; // Dynamic week count
+
                     // Update navigation button states
                     document.getElementById('prevWeekBtn').disabled = (currentWeek === 0);
-                    document.getElementById('nextWeekBtn').disabled = (currentWeek === 9);
+                    document.getElementById('nextWeekBtn').disabled = (currentWeek === (weeklyDurations.tuesday.length - 1)); // Dynamic week count
                 }
 
                 document.addEventListener('DOMContentLoaded', () => {
                     const planContainer = document.getElementById('training-plan-container');
-                    const storedStates = JSON.parse(localStorage.getItem('trainingPlanStates')) || {};
+                    let storedStates = {}; // Initialize here, will try to load from localStorage
+
+                    try {
+                        storedStates = JSON.parse(localStorage.getItem('trainingPlanStates')) || {};
+                    } catch (e) {
+                        console.error("Error parsing training plan states from localStorage:", e);
+                        // Optionally, clear invalid localStorage data: localStorage.removeItem('trainingPlanStates');
+                    }
                     
                     const startDate = new Date('2025-06-30T00:00:00'); // Explicitly set to Monday, June 30, 2025
 
@@ -185,9 +188,9 @@
                     const today = new Date();
                     const diffTime = Math.abs(today - startDate);
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    const initialWeekIndex = Math.min(9, Math.floor(diffDays / 7)); // Cap at last week
+                    const initialWeekIndex = Math.min(weeklyDurations.tuesday.length - 1, Math.floor(diffDays / 7)); // Cap at last week
 
-                    for (let week = 1; week <= 10; week++) {
+                    for (let week = 1; week <= weeklyDurations.tuesday.length; week++) { // Use dynamic week count
                         const weekDiv = document.createElement('div');
                         weekDiv.className = 'week-container p-4 rounded-xl bg-gray-100 border border-gray-200 shadow-sm mb-6'; // Added week-container class
                         weekDiv.setAttribute('data-week', week - 1); // 0-indexed for JS
@@ -201,6 +204,7 @@
 
                         dailyWorkouts.forEach((dayData, dayIndex) => {
                             const dayCard = document.createElement('div');
+                            // Ensure dayId is unique across weeks
                             const dayId = `week-${week}-day-${dayData.day.toLowerCase().replace(/\s/g, '-')}`;
                             dayCard.className = `day-card bg-white p-4 rounded-lg border border-gray-200 flex flex-col justify-between ${storedStates[dayId] ? 'done' : ''}`;
                             dayCard.setAttribute('data-day-id', dayId);
@@ -241,83 +245,11 @@
                                 <div>
                                     <h4 class="text-lg font-semibold text-gray-900 mb-1">${dayData.day}: ${dayData.type}</h4>
                                     <p class="text-gray-600 text-xs mb-2">${formattedDate}</p>
-                                    <p class="text-gray-700 text-sm"><strong>Goal:</strong> ${dayData.goal}</p>
+                                    <p class="text-gray-700 text-sm"><strong>Goal:</strong> ${dayData.goal || 'N/A'}</p>
                                     <p class="text-gray-700 text-sm"><strong>Workout:</strong> ${workoutText}</p>
                                 </div>
                                 <button class="done-button mt-3 py-1 px-3 text-sm rounded-md border border-gray-300 bg-gray-200 text-gray-700 hover:bg-gray-300 self-end ${storedStates[dayId] ? 'done' : ''}">
                                     ${storedStates[dayId] ? 'Done &#10003;' : 'Mark as Done'}
                                 </button>
                             `;
-                            daysGrid.appendChild(dayCard);
-
-                            const doneButton = dayCard.querySelector('.done-button');
-                            doneButton.addEventListener('click', () => {
-                                const wasDone = dayCard.classList.contains('done');
-                                dayCard.classList.toggle('done');
-                                const isDone = dayCard.classList.contains('done');
-                                doneButton.textContent = isDone ? 'Done \u2713' : 'Mark as Done';
-
-                                // Update completed sessions count
-                                if (isDone && !wasDone) {
-                                    completedSessions++;
-                                } else if (!isDone && wasDone) {
-                                    completedSessions--;
-                                }
-                                updateProgressBar(); // Update progress bar after count changes
-
-                                // Update local storage
-                                storedStates[dayId] = isDone;
-                                localStorage.setItem('trainingPlanStates', JSON.stringify(storedStates));
-                            });
-                        });
-                        // Append Heart Rate Zones to the end of each week
-                        weekDiv.insertAdjacentHTML('beforeend', heartRateZonesHtml);
-                        planContainer.appendChild(weekDiv);
-                    }
-
-                    // Set initial week and update progress bar
-                    showWeek(initialWeekIndex);
-                    updateProgressBar();
-
-                    // Navigation button event listeners
-                    document.getElementById('prevWeekBtn').addEventListener('click', () => {
-                        if (currentWeek > 0) {
-                            showWeek(currentWeek - 1);
-                        }
-                    });
-                    document.getElementById('nextWeekBtn').addEventListener('click', () => {
-                        if (currentWeek < 9) { // 10 weeks, 0-indexed means max index is 9
-                            showWeek(currentWeek + 1);
-                        }
-                    });
-                });
-
-                function clearAllProgress() {
-                    if (confirm("Are you sure you want to reset progress for all training sessions? This cannot be undone.")) {
-                        localStorage.removeItem('trainingPlanStates');
-                        completedSessions = 0; // Reset count
-                        updateProgressBar(); // Update progress bar
-                        location.reload(); // Reload the page to reflect changes and re-render done states
-                    }
-                }
-            </script>
-        </div>
-
-        <!-- General Considerations Section -->
-        <div class="mt-8 bg-green-50 border border-green-200 text-green-800 p-4 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-semibold mb-3">General Considerations for Base Building</h2>
-            <ul class="list-disc pl-5 space-y-2">
-                <li><strong class="font-medium">Listen to Your Body:</strong> Take extra rest days or reduce intensity if feeling fatigued or experiencing pain.</li>
-                <li><strong class="font-medium">Consistency is Key:</strong> Aim to stick to the schedule as much as possible for optimal results.</li>
-                <li><strong class="font-medium">Nutrition & Hydration:</strong> Fuel your body with a balanced diet and stay well-hydrated.</li>
-                <li><strong class="font-medium">Prioritize Sleep:</strong> Get 7-9 hours of quality sleep nightly for recovery and adaptation.</li>
-                <li><strong class="font-medium">Warm-up & Cool-down:</strong> Always include 5-10 minutes of easy jogging before and after runs, along with dynamic/static stretches.</li>
-                <li><strong class="font-medium">Progression with Recovery:</strong> The plan now explicitly includes two recovery weeks (Week 4 and Week 8) where training volume is reduced to allow for better adaptation and injury prevention. Durations for your Tuesday, Thursday, Saturday, and Sunday runs are detailed for each week, increasing by a consistent percentage during building periods.</li>
-            </ul>
-            <button class="mt-4 py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 shadow-md" onclick="clearAllProgress()">Reset All Progress</button>
-        </div>
-
-    </div>
-
-</body>
-</html>
+                            daysGrid.
