@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marathon Training App</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -51,9 +50,6 @@
 </head>
 <body class="p-4 sm:p-6 md:p-8">
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 sm:p-8 md:p-10 mb-8">
-        <!-- Removed H1 and welcome text -->
-
-        <!-- Overall Progress Section -->
         <div class="bg-purple-50 border border-purple-200 text-purple-800 p-4 rounded-lg mb-8 shadow-sm">
             <h2 class="text-2xl font-semibold mb-3">Overall Progress</h2>
             <div class="progress-bar-container">
@@ -62,7 +58,6 @@
             <p class="text-center mt-2 text-lg font-medium" id="progress-text">0 of 70 sessions (0%) done.</p>
         </div>
 
-        <!-- Week Navigation -->
         <div class="flex items-center justify-between mb-6">
             <button id="prevWeekBtn" class="flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -80,7 +75,6 @@
         </div>
 
         <div class="space-y-8" id="training-plan-container">
-            <!-- Data for dynamic generation -->
             <script>
                 const weeklyDurations = {
                     "tuesday": [30, 32, 34, 30, 34, 38, 42, 34, 42, 50],
@@ -139,13 +133,13 @@
                     <div class="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-lg mt-6 shadow-sm">
                         <h2 class="text-xl font-semibold mb-3">Understanding Your Heart Rate Zones</h2>
                         <p class="mb-4 text-sm">
-                            To effectively follow this plan, you'll need to define your personal heart rate (HR) zones. These are typically based on a percentage of your Maximum Heart Rate (MHR) or Lactate Threshold Heart Rate (LTHR).
+                            To effectively follow this plan, you'll need to define your personal heart rate (HR) zones.
                         </p>
                         <ul class="list-disc pl-5 space-y-2 text-sm">
-                            <li><strong class="font-medium">Phase 1 HR (Recovery/Very Easy):</strong> ~50-60% MHR or 60-70% LTHR - Very light effort, conversational pace.</li>
-                            <li><strong class="font-medium">Phase 2 HR (Aerobic/Easy):</strong> ~60-70% MHR or 70-80% LTHR - Comfortable, sustainable pace, can talk in full sentences. This is your "easy-steady" zone.</li>
-                            <li><strong class="font-medium">Phase 3 HR (Tempo/Threshold):</strong> ~70-80% MHR or 80-90% LTHR - Moderately hard, can speak in short sentences, sustainable for longer periods (e.g., 20-60 minutes). This is where your "steady" runs will be.</li>
-                            <li><strong class="font-medium">Phase 4 HR (Interval/VO2 Max):</strong> ~80-90% MHR or 90-100% LTHR - Hard effort, can only speak a few words at a time, sustainable for short bursts (e.g., 3-8 minutes).</li>
+                            <li><strong class="font-medium">Phase 1 HR (Recovery/Very Easy):</strong> 117-136 BPM - Very light effort, conversational pace.</li>
+                            <li><strong class="font-medium">Phase 2 HR (Aerobic/Easy):</strong> 137-155 BPM - Comfortable, sustainable pace, can talk in full sentences. This is your "easy-steady" zone.</li>
+                            <li><strong class="font-medium">Phase 3 HR (Tempo/Threshold):</strong> 156-181 BPM - Moderately hard, can speak in short sentences, sustainable for longer periods (e.g., 20-60 minutes). This is where your "steady" runs will be.</li>
+                            <li><strong class="font-medium">Phase 4 HR (Interval/VO2 Max):</strong> 182-195 BPM - Hard effort, can only speak a few words at a time, sustainable for short bursts (e.g., 3-8 minutes).</li>
                         </ul>
                     </div>
                 `;
@@ -305,7 +299,6 @@
             </script>
         </div>
 
-        <!-- General Considerations Section -->
         <div class="mt-8 bg-green-50 border border-green-200 text-green-800 p-4 rounded-lg shadow-sm">
             <h2 class="text-2xl font-semibold mb-3">General Considerations for Base Building</h2>
             <ul class="list-disc pl-5 space-y-2">
